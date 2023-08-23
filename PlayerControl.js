@@ -44,8 +44,8 @@ const PlayerControl = ({
   const [modal, setModal] = useState(false);
 
   const handleOnSlide = time => {
-    console.log(time);
-    // onSlideCapture({seekTime: time});
+    // console.log(time);
+    onSlideCapture({seekTime: time});
   };
   return (
     <View style={styles.container}>
@@ -109,14 +109,11 @@ const PlayerControl = ({
           value={state.time}
           minimumValue={0}
           maximumValue={state.duration}
-          onValueChange={() => {
-            console.log('time');
+          onValueChange={({value}) => {
+            onSlideCapture({seekTime: value});
           }}
-          // // onSlidingStart={onSlideStart}
-          // onSlidingComplete={({time}) => {
-          //   // handleOnSlide(time)
-          //   console.log(time);
-          // }}
+          onSlidingStart={onSlideStart}
+          onSlidingComplete={handleOnSlide}
           style={styles.seekSlider}
           step={0.1}
           maximumTrackTintColor={'white'}
@@ -136,12 +133,12 @@ const PlayerControl = ({
         }}>
         <Slider
           value={state.volume}
-          onSlidingComplete={onVolumeSeek}
+          // onSlidingComplete={onVolumeSeek}
           minimumValue={0}
           maximumValue={1}
-          style={{height: 10, width: 150}}
+          style={{height: 20, width: 150}}
           step={0.1}
-          // onValueChange={{}}
+          onValueChange={value => onVolumeSeek(value)}
           maximumTrackTintColor={'white'}
           minimumTrackTintColor={'red'}
         />
@@ -246,6 +243,7 @@ const styles = StyleSheet.create({
   },
   seekSlider: {
     width: 300,
+    height: 20,
   },
   // modal: {
   //   flex: 1,

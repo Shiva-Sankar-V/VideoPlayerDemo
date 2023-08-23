@@ -45,7 +45,7 @@ const VideoPlayer = () => {
     setState({...state, playing: !state.playing});
   };
   const forwardHandler = () => {
-    playerRef.current.seek(currentTime + 30);
+    playerRef.current.seek(currentTime + 10);
     setState({...state, currentTime: currentTime + 10});
   };
   const rewindHandler = () => {
@@ -60,11 +60,11 @@ const VideoPlayer = () => {
     });
   };
 
-  const volumeSeekHandler = res => {
+  const volumeSeekHandler = value => {
     setState({
       ...state,
-      volume: res,
-      savedVol: res,
+      volume: value,
+      savedVol: value,
     });
   };
 
@@ -88,7 +88,6 @@ const VideoPlayer = () => {
   };
 
   const onSeek = data => {
-    console.log('time');
     playerRef.current.seek(data.seekTime);
     setState({
       ...state,
@@ -105,20 +104,13 @@ const VideoPlayer = () => {
       time: 0,
     });
   };
-  const playerControlHandler = () => {
-    // if (fullScreen === true && controls) {
-    //   setState({...state, controls: false});
-    // } else {
-    //   setState({...state, controls: true});
-    // }
-  };
+
   console.log(playing, controls, 'full Screen', fullScreen);
   return (
     <View style={styles.container}>
       <Pressable
         onPress={() => {
           setState({...state, controls: !state.controls});
-          // onPress={playerControlHandler}
         }}>
         <Video
           source={{
@@ -137,7 +129,6 @@ const VideoPlayer = () => {
           rate={playbackRate}
           fullscreen={fullScreen}
           controls={false}
-          onSeek
         />
       </Pressable>
       {controls && (
